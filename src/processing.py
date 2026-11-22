@@ -115,6 +115,9 @@ class DataProcessor:
         user_df["is_two"] = user_df.apply(
             lambda row: 1 if row["event_count"] >= 2 else 0, axis=1
         )
+        user_df = user_df[
+            user_df["event_count"] <= user_df["event_count"].quantile(0.99)
+        ]
         return user_df
 
     @staticmethod
