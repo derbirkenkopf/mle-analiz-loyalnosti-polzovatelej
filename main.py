@@ -15,6 +15,8 @@ def main() -> None:
     dp.retention_event_type(user_df)
     dp.retention_device(user_df)
     dp.retention_region(user_df)
+    dp.first_hypothesis(user_df)
+    dp.second_hypothesis(user_df)
     dp.cor_heatmap(dp.correlation_matrix(user_df))
 
 
