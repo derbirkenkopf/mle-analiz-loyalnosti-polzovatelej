@@ -41,7 +41,7 @@ class DataProcessor:
         df = pd.read_csv(self.rate_path)
         return df
 
-    def preprocess(self) -> pd.DataFrame:
+    def preprocessed(self) -> pd.DataFrame:
         df = self.read_db()
         tickets_tenge = self.read_rate()
         tickets_tenge["data"] = pd.to_datetime(tickets_tenge["data"])
@@ -71,7 +71,7 @@ class DataProcessor:
         print(f"Осталось {len(df)} записей.")
         return df
 
-    def customer_profile(self, df: pd.DataFrame) -> pd.DataFrame:
+    def user_profile(self, df: pd.DataFrame) -> pd.DataFrame:
         user_df = (
             df.groupby("user_id")
             .agg(
@@ -184,6 +184,9 @@ class DataProcessor:
 
     @staticmethod
     def correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
+        df["weekday"] = df.apply(
+            lambda row: row["min_order_dt"].day_name(), axis=1
+        )
         df["segment"] = pd.cut(
             df["event_count"], bins=[0, 1, 2, 4, float("inf")]
         )
@@ -208,9 +211,11 @@ class DataProcessor:
                 "mean_revenue_rub",
             ]
         )
-        return cormat[["event_count"]].sort_values(
+        result = cormat[["event_count"]].sort_values(
             "event_count", ascending=False
         )
+        print(result)
+        return result
 
     @staticmethod
     def cor_heatmap(cormat: pd.DataFrame) -> None:
