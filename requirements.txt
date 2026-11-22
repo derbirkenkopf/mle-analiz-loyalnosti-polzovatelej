@@ -10,6 +10,8 @@ packaging==26.3
 pandas==3.1.1
 phik==0.12.5
 pillow==13.0.0
+psycopg==3.3.9
+psycopg-binary==3.3.9
 psycopg2==2.9.13
 psycopg2-binary==2.9.13
 pyparsing==3.3.3
